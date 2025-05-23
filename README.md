@@ -79,3 +79,5 @@ Example console output for a library:
 system.data.sqlclient (nuget:system.data.sqlclient::4.8.3:)
   Safe versions: 4.9.0, 4.8.6
 ```
+
+There is an example json output for an SBOM and list of safe versions in the "example" folder within this repo
