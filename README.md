@@ -55,7 +55,7 @@ pip install -r requirements.txt
 Run the script by passing in your Veracode application profile name:
 
 ```bash
-python3 get_safe_versions.py "My Application Name"
+python get_safe_versions.py "My Application Name"
 ```
 
 ---
@@ -74,7 +74,7 @@ The script will:
    safe_versions_<AppName>_<Timestamp>.json
    ```
 
-Example output:
+Example console output for a library:
 ```
 system.data.sqlclient (nuget:system.data.sqlclient::4.8.3:)
   Safe versions: 4.9.0, 4.8.6
