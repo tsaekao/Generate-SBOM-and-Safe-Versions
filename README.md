@@ -55,7 +55,7 @@ pip install -r requirements.txt
 Run the script by passing in your Veracode application profile name:
 
 ```bash
-python get_safe_versions.py "Veracode App Profile Name"
+python sbom_safe_versions.py "Veracode App Profile Name"
 ```
 
 ---
