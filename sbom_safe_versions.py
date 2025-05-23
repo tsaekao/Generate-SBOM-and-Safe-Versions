@@ -12,7 +12,7 @@ from veracode_api_signing.plugin_requests import RequestsAuthPluginVeracodeHMAC
 def sanitize_filename(name):
     return re.sub(r'[^a-zA-Z0-9_-]', '_', name)
 
-
+# Use Applications API to get GUID from app profile name
 def get_app_guid(app_name):
     url = f"https://api.veracode.com/appsec/v1/applications?name={quote(app_name)}"
     response = requests.get(url, auth=RequestsAuthPluginVeracodeHMAC())
@@ -22,14 +22,14 @@ def get_app_guid(app_name):
         raise ValueError(f"Application with name '{app_name}' not found.")
     return apps[0]["guid"]
 
-
+# Use SCA Agent (srcclr) API to generate SBOM with GUID
 def get_sbom(app_guid):
     url = f"https://api.veracode.com/srcclr/sbom/v1/targets/{app_guid}/cyclonedx?type=application"
     response = requests.get(url, auth=RequestsAuthPluginVeracodeHMAC())
     response.raise_for_status()
     return response.json()
 
-
+# Grab each component and get the safe versions for each one
 def get_safe_versions(component_ref):
     url = f"https://api.veracode.com/srcclr/v3/component-activity/{quote(component_ref, safe='')}"
     response = requests.get(url, auth=RequestsAuthPluginVeracodeHMAC())
@@ -37,7 +37,6 @@ def get_safe_versions(component_ref):
         data = response.json()
         return data.get("safe_versions", [])
     return []
-
 
 def main(app_name):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -59,6 +58,7 @@ def main(app_name):
     components = sbom.get("components", [])
     results = []
 
+    # Create json for list of safe versions
     for comp in components:
         ref = comp.get("bom-ref", "")
         name = comp.get("name", "")
@@ -70,6 +70,7 @@ def main(app_name):
             "safe_versions": safe_versions
         })
 
+    # Pring list of safe versions to console
     print("\n=== Safe Versions Summary ===")
     for result in results:
         print(f"{result['component']} ({result['ref']}):")
@@ -79,7 +80,6 @@ def main(app_name):
     print(f"Saving safe version summary to '{safe_versions_filename}'...")
     with open(safe_versions_filename, "w") as out_file:
         json.dump(results, out_file, indent=2)
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
