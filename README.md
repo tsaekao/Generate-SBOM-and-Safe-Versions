@@ -10,20 +10,20 @@ A Python script to grab a Veracode application profile's Upload &amp; Scan SCA r
 
 ## 🔐 Veracode API Credentials
 
-The script uses the Python HMAC Signing Library. If you're running it locally, you can create a credentials file:
+The script uses the Python HMAC Signing Library. If you're running it locally, you can create a credentials file in ~/.veracode/credentials:
 
-Save Veracode API credentials in ~/.veracode/credentials
-
+```bash
 [default]
 veracode_api_key_id = <YOUR_API_KEY_ID>
 veracode_api_key_secret = <YOUR_API_KEY_SECRET>
+```
 
 OR make sure you have your API credentials set up in environment variables:
 
-
+```bash
 VERACODE_API_KEY_ID=your_api_key_id
 VERACODE_API_KEY_SECRET=your_api_key_secret
-
+```
 
 ---
 
@@ -79,27 +79,3 @@ Example output:
 system.data.sqlclient (nuget:system.data.sqlclient::4.8.3:)
   Safe versions: 4.9.0, 4.8.6
 ```
-
----
-
-## 🔄 Ecosystem Support
-
-Supports components from all ecosystems found in the SBOM:
-- NuGet
-- Maven
-- npm
-- PyPI
-- and more...
-
----
-
-## 🧩 Notes
-
-- The `component-activity` API may not return safe versions for **every** package, especially obscure or private ones.
-- Use this script to help enforce dependency hygiene and upgrade recommendations across your application landscape.
-
----
-
-## 📞 Support
-
-If you need help, reach out to your Veracode representative or [contact support](https://www.veracode.com/support).
